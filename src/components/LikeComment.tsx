@@ -10,6 +10,7 @@ interface Props {
 
 const LikeComment = ({ employeeId }: Props) => {
   const [like, setLike] = useState(false);
+  console.log(employeeId);
 
   return (
     <div>
