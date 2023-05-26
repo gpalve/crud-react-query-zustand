@@ -6,9 +6,10 @@ import EditEmployee from "./EditEmployee";
 import { Link } from "react-router-dom";
 import DepartmentFilter from "./DepartmentFilter";
 import useEmployeeStore from "../store";
+import { Spinner } from "react-bootstrap";
 
 const ListEmployee = () => {
-  const { data: employees } = useEmployees(); // Rename 'data' to 'employees'
+  const { data: employees, isLoading } = useEmployees(); // Rename 'data' to 'employees'
   const queryClient = useQueryClient();
   const selectedDept = useEmployeeStore((state) => state.selectedDept);
 
@@ -29,50 +30,53 @@ const ListEmployee = () => {
     deleteUser.mutate(id.toString());
   };
 
+  isLoading ? <Spinner /> : "";
+
   return (
     <div>
       <DepartmentFilter />
-      <table className="table table-striped rounded shadow-sm">
-        <thead style={{ background: "skyblue" }}>
-          <tr>
-            {" "}
-            {/* Wrap table headers with 'tr' tags */}
-            <th>ID</th>
-            <th>PF</th>
-            <th>Name</th>
-            <th>Mobile</th>
-            <th>Dept</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredEmployees?.map(
-            (
-              employee // Use 'employees' instead of 'data'
-            ) => (
-              <tr key={employee.id}>
-                <td>{employee.id}</td>
-                <td>{employee.Pf_no}</td>
-                <td>
-                  <Link to={`employee/${employee.id}`}>{employee.Name}</Link>
-                </td>
-                <td>{employee.Contact}</td>
-                <td>{employee.Dept}</td>
-                <td>
-                  <EditEmployee employee={employee} />
-                  &nbsp;
-                  <button
-                    className="btn btn-sm btn-outline-danger"
-                    onClick={() => handleDelete(employee.id)}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            )
-          )}
-        </tbody>
-      </table>
+      <div className="table-responsive">
+        <table className="table table-striped rounded shadow-sm">
+          <thead style={{ background: "skyblue" }}>
+            <tr>
+              {/* Wrap table headers with 'tr' tags */}
+              <th>ID</th>
+              <th>PF</th>
+              <th>Name</th>
+              <th>Mobile</th>
+              <th>Dept</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredEmployees?.map(
+              (
+                employee // Use 'employees' instead of 'data'
+              ) => (
+                <tr key={employee.id}>
+                  <td>{employee.id}</td>
+                  <td>{employee.Pf_no}</td>
+                  <td>
+                    <Link to={`employee/${employee.id}`}>{employee.Name}</Link>
+                  </td>
+                  <td>{employee.Contact}</td>
+                  <td>{employee.Dept}</td>
+                  <td>
+                    <EditEmployee employee={employee} />
+                    &nbsp;
+                    <button
+                      className="btn btn-sm btn-outline-danger"
+                      onClick={() => handleDelete(employee.id)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              )
+            )}
+          </tbody>
+        </table>
+      </div>
       {deleteUser.error?.message}
       {deleteUser.isLoading && (
         <div className="d-flex justify-content-center">
