@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import useEmployee from "../hooks/useEmployee";
 import { Card, Col, Container, ListGroup, Row, Spinner } from "react-bootstrap";
 import LikeComment from "../components/LikeComment";
+import FullPageLoader from "../components/FullPageLoader";
 
 const SingleEmployee = () => {
   const { id } = useParams();
@@ -11,7 +12,7 @@ const SingleEmployee = () => {
   return (
     <div>
       {isLoading ? (
-        <Spinner />
+        <FullPageLoader />
       ) : (
         <Container>
           <Row>

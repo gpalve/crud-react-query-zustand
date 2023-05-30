@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 import Employee from "../entities/Employee";
 
 const axiosInstance = axios.create({
@@ -11,8 +11,8 @@ class APIClient<T> {
     this.endpoint = endpoint;
   }
 
-  getEmployeesData = () =>
-    axiosInstance.get<T[]>(this.endpoint).then((res) => res.data);
+  getEmployeesData = (config: AxiosRequestConfig) =>
+    axiosInstance.get<T[]>(this.endpoint, config).then((res) => res.data);
 
   getEmployee = (id: string) =>
     axiosInstance.get<T>(this.endpoint + "/" + id).then((res) => res.data);
@@ -27,6 +27,9 @@ class APIClient<T> {
 
   deleteEmployeeData = (id: string) =>
     axiosInstance.delete(this.endpoint + "/" + id).then((res) => res.data);
+
+  getEmployeeByDept = (dept: string) =>
+    axiosInstance.get(this.endpoint + "/" + dept).then((res) => res.data);
 }
 
 export default APIClient;

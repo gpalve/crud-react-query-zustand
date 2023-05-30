@@ -2,7 +2,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRef, useState } from "react";
 import APIClient from "../services/APIClient";
 import Employee from "../entities/Employee";
-import { Spinner, Alert } from "react-bootstrap";
+import { Alert } from "react-bootstrap";
+import FullPageLoader from "./FullPageLoader";
 
 const AddEmployee = () => {
   const queryClient = useQueryClient();
@@ -10,7 +11,7 @@ const AddEmployee = () => {
   const pfNo = useRef<HTMLInputElement>(null);
   const nameRef = useRef<HTMLInputElement>(null);
   const contact = useRef<HTMLInputElement>(null);
-  const dept = useRef<HTMLInputElement>(null);
+  const dept = useRef<HTMLSelectElement>(null);
 
   const [error, setError] = useState<string | null>(null);
 
@@ -87,12 +88,18 @@ const AddEmployee = () => {
         </div>
         <br />
         <div className="col-md-12">
-          <input
+          <select
             ref={dept}
-            type="text"
             className="form-control"
             placeholder="Enter Dept"
-          />
+            required
+          >
+            <option value="">Select Department</option>
+            <option value="SnT">SnT</option>
+            <option value="Optg">Optg</option>
+            <option value="Engg">Engg</option>
+            <option value="Electrical">Electrical</option>
+          </select>
         </div>
         <br />
         <div className="col-md-12">
@@ -104,7 +111,7 @@ const AddEmployee = () => {
               {error}
             </Alert>
           )}
-          {addEmployee.isLoading && <Spinner className="my-2" />}
+          {addEmployee.isLoading && <FullPageLoader />}
         </div>
       </form>
     </div>
