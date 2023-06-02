@@ -51,6 +51,7 @@ const DataFilters = () => {
           <div className="col-md-3">
             <select
               className="form-select"
+              value={selectedDept ? selectedDept : ""}
               onChange={(event) => setSelectedDept(event.target.value)}
             >
               <option value={selectedDept ? selectedDept : ""}>
@@ -67,7 +68,17 @@ const DataFilters = () => {
             </button>
           </div>
           <div className="col-md-1 my-1">
-            <button className="btn btn-sm btn-primary" onClick={resetEmployees}>
+            <button
+              type="button"
+              className="btn btn-sm btn-primary"
+              onClick={() => {
+                resetEmployees();
+                if (pfNo.current) pfNo.current.value = "";
+                if (nameRef.current) nameRef.current.value = "";
+                if (contact.current) contact.current.value = "";
+                setSelectedDept("");
+              }}
+            >
               Reset
             </button>
           </div>

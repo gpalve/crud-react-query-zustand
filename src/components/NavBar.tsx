@@ -1,10 +1,19 @@
 import { Container, Nav, Navbar } from "react-bootstrap";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { headerStyle, headerStyleActive } from "../styles";
+import useEmployeeStore from "../store";
 
 const NavBar = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const query = location.pathname.split("/").pop();
+  const resetToken = useEmployeeStore((s) => s.resetToken);
+  const hasToken = useEmployeeStore((s) => s.hasToken);
+
+  const handleLogOut = () => {
+    resetToken();
+    navigate("/login");
+  };
 
   return (
     <Navbar bg="light" expand="lg" className="shadow-sm">
@@ -34,6 +43,13 @@ const NavBar = () => {
                 ✨ About
               </Link>
             </Nav.Link>
+            {hasToken() && (
+              <Nav.Link>
+                <Link to="/login" onClick={handleLogOut} style={headerStyle}>
+                  🔻 Logout
+                </Link>
+              </Nav.Link>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>

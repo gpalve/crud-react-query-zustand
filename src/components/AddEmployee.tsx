@@ -53,11 +53,7 @@ const AddEmployee = () => {
 
   return (
     <div>
-      <form
-        style={{ background: "#e3e3e3" }}
-        className="p-2 rounded shadow-sm"
-        onSubmit={handleSubmit}
-      >
+      <form className="p-2 rounded shadow-lg bg-light" onSubmit={handleSubmit}>
         <h4>Add Employee</h4>
         <hr />
         <div className="col-md-12">

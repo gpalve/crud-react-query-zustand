@@ -14,6 +14,8 @@ interface EmployeeQueryStore {
   setPfSearch: (pf: string) => void;
   setContact: (contact: string) => void;
   resetEmployees: () => void;
+  hasToken: () => boolean;
+  resetToken: () => void;
 }
 
 const useEmployeeStore = create<EmployeeQueryStore>((set) => ({
@@ -27,6 +29,13 @@ const useEmployeeStore = create<EmployeeQueryStore>((set) => ({
   setContact: (contact) =>
     set((store) => ({ employeeQuery: { ...store.employeeQuery, contact } })),
   resetEmployees: () => set(() => ({ employeeQuery: {} })),
+  hasToken: () => {
+    const token = localStorage.getItem("token");
+    return !!token;
+  },
+  resetToken: () => {
+    localStorage.removeItem("token");
+  },
 }));
 
 export default useEmployeeStore;

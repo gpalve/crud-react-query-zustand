@@ -1,10 +1,13 @@
+import { Outlet, useLocation } from "react-router-dom";
 import NavBar from "../components/NavBar";
-import { Outlet } from "react-router-dom";
 
 const Layout = () => {
+  const location = useLocation();
+  const path = location.pathname;
+  const allowNavbar = path.endsWith("login") || path.endsWith("register");
   return (
     <div>
-      <NavBar />
+      {allowNavbar ? "" : <NavBar />}
       <div className="container">
         <div className="my-2">
           <Outlet />
